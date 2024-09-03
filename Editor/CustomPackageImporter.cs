@@ -58,10 +58,10 @@ namespace Editor {
                 var json = File.ReadAllText(packageJsonPath);
                 var packageJson = JObject.Parse(json);
 
-                if (packageJson["dependencies"] is not JObject dependencies) return;
-
-                foreach (var dependency in dependencies) {
-                    manifestJson["dependencies"]![dependency.Key] = dependency.Value;
+                if (packageJson["dependencies"] is JObject dependencies) {
+                    foreach (var dependency in dependencies) {
+                        manifestJson["dependencies"]![dependency.Key] = dependency.Value;
+                    }
                 }
 
                 manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
