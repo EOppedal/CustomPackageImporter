@@ -36,15 +36,16 @@ namespace Editor {
                 return;
             }
 
+            var regex = new Regex("https://[^\"]+");
             foreach (var button in Buttons) {
-                var regex = new Regex("https://[^\"]+");
-                foreach (var variable in dependencies) {
-                    var match = regex.Match(variable.ToString());
-                    button.enabledSelf = match.Success;
-                    Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
-                }
+                var hasHttpsLink = dependencies.Select(variable => regex.Match(variable.ToString()))
+                    .Any(match => match.Success);
+
+                button.enabledSelf = hasHttpsLink;
+                Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
         }
+
 
         public void CreateGUI() {
             visualTreeAsset.CloneTree(rootVisualElement);
