@@ -32,7 +32,7 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            var repoPath = Path.Combine(ResourcesPath, "tempRepo");
+            var repoPath = Path.Combine(ResourcesPath, "/tempRepo");
 
             try {
                 CloneRepository(gitUrl, repoPath);
