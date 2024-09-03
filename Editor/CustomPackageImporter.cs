@@ -2,7 +2,6 @@
 using System;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -31,7 +30,10 @@ namespace Editor {
             var importButton = rootVisualElement.Q<Button>("ImportButton");
             
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
+            importButton.RegisterCallback<ClickEvent>(_ => {
+                InstallGitPackage(textField.value);
+                AssetDatabase.Refresh();
+            });
             
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
 
@@ -79,7 +81,10 @@ namespace Editor {
             var button = new Button {
                 text = package.packageName
             };
-            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
+            button.RegisterCallback<ClickEvent>(_ => {
+                InstallGitPackage(package.gitUrl);
+                AssetDatabase.Refresh();
+            });
             button.AddToClassList("button");
             rootVisualElement.Add(button);
         }
