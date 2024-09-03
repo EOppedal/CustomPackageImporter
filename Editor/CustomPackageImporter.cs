@@ -36,7 +36,7 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            const string repoPath = "tempRepo";
+            const string repoPath = "Assets/tempRepo";
 
             try {
                 CloneRepository(gitUrl, repoPath);
