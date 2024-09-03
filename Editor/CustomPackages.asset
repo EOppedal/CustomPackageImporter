@@ -31,3 +31,7 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Timers.git
   - packageName: Singletons
     gitUrl: https://github.com/EOppedal/Singletons.git
+  - packageName: Encryption
+    gitUrl: https://github.com/EOppedal/Encryption.git
+  - packageName: EncryptedSerializer
+    gitUrl: https://github.com/EOppedal/EncryptedSerializer.git
