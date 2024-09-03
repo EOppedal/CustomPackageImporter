@@ -13,14 +13,12 @@ MonoBehaviour:
   m_Name: CustomPackages
   m_EditorClassIdentifier: 
   packages:
-  - packageName: ScrubGlobalData
-    gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
   - packageName: ClampedFloat
     gitUrl: https://github.com/EOppedal/ClampedFloat.git
   - packageName: Observable
     gitUrl: https://github.com/EOppedal/Observable.git
-  - packageName: Serializers
-    gitUrl: https://github.com/EOppedal/Serializers.git
+  - packageName: ScrubGlobalData
+    gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
   - packageName: ExtentionMethods
     gitUrl: https://github.com/EOppedal/ExtentionMethods.git
   - packageName: DebugLogger
@@ -31,6 +29,8 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Timers.git
   - packageName: Singletons
     gitUrl: https://github.com/EOppedal/Singletons.git
+  - packageName: Serializers
+    gitUrl: https://github.com/EOppedal/Serializers.git
   - packageName: Encryption
     gitUrl: https://github.com/EOppedal/Encryption.git
   - packageName: EncryptedSerializer
