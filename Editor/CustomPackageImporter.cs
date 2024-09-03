@@ -29,9 +29,20 @@ namespace Editor {
         }
 
         private void Update() {
-            Debug.Log(_manifestJson["dependencies"]);
+            var dependencies = _manifestJson["dependencies"];
+            if (dependencies == null) {
+                Debug.LogWarning("Dependencies not found in manifest.");
+                return;
+            }
+
+            Debug.Log(dependencies.ToString());
+
             foreach (var button in Buttons) {
-                button.enabledSelf = _manifestJson["dependencies"]!.All(x => x.ToString() != button.tooltip);
+                button.enabledSelf = dependencies
+                    .Children<JProperty>()
+                    .Any(dep => dep.Name == button.tooltip);
+
+                Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
         }
 
