@@ -60,7 +60,8 @@ namespace Editor {
 
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
-                        manifestJson["dependencies"]![dependency.Key] = dependency.Value;
+                        InstallGitPackage(dependency.Value?.ToString());
+                        // manifestJson["dependencies"]![dependency.Key] = dependency.Value;
                     }
                 }
 
