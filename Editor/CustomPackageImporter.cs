@@ -43,11 +43,6 @@ namespace Editor {
         private void InstallGitPackage(string gitUrl) {
             const string repoPath = "Assets/tempFolder";
 
-            if (_manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
-                UnityEngine.Debug.LogWarning("The git package is already installed");
-                return;
-            }
-
             try {
                 CloneRepository(gitUrl, repoPath);
 
@@ -65,7 +60,6 @@ namespace Editor {
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
                         InstallGitPackage(dependency.Value?.ToString());
-                        // manifestJson["dependencies"]![dependency.Key] = dependency.Value;
                     }
                 }
 
