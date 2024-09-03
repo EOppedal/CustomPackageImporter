@@ -89,7 +89,7 @@ namespace Editor {
 
         private static void TryDeleteTempRepo(string repoPath) {
             if (Directory.Exists(repoPath)) {
-                Directory.Delete(repoPath, true);
+                FileUtil.DeleteFileOrDirectory(repoPath);
             }
         }
 
