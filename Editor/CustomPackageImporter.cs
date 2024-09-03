@@ -38,9 +38,12 @@ namespace Editor {
             Debug.Log(dependencies.ToString());
 
             foreach (var button in Buttons) {
+                foreach (var variable in dependencies) {
+                    
+                }
                 button.enabledSelf = dependencies
                     .Children<JProperty>()
-                    .Any(dep => dep.Name == button.tooltip);
+                    .Any(dep => dep.ToString() != button.tooltip);
 
                 Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
