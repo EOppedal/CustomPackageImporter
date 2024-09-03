@@ -30,7 +30,7 @@ namespace Editor {
 
         private void Update() {
             foreach (var button in Buttons) {
-                button.enabledSelf = _manifestJson["dependencies"]!.All(x => x.ToString() == button.tooltip);
+                button.enabledSelf = _manifestJson["dependencies"]!.All(x => x.ToString() != button.tooltip);
             }
         }
 
