@@ -37,8 +37,7 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            var repoPath = "Assets/" + new GUID();
-            TryDeleteTempRepo(repoPath);
+            const string repoPath = "Assets/tempFolder";
 
             var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
             if (manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
@@ -57,6 +56,8 @@ namespace Editor {
 
                 var json = File.ReadAllText(packageJsonPath);
                 var packageJson = JObject.Parse(json);
+                
+                TryDeleteTempRepo(repoPath);
 
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
@@ -73,8 +74,6 @@ namespace Editor {
             }
             catch (Exception ex) {
                 UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
-            }
-            finally {
                 TryDeleteTempRepo(repoPath);
             }
         }
