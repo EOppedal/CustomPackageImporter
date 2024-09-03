@@ -34,6 +34,8 @@ namespace Editor {
 
             var json = File.ReadAllText(repoPath + PackagePath);
             var packageJson = JObject.Parse(json);
+            
+            Directory.Delete(repoPath);
 
             if (packageJson["dependencies"] is not JObject dependencies) return;
             var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
@@ -45,8 +47,6 @@ namespace Editor {
             manifestJson["dependencies"][packageJson["name"]] = gitUrl;
 
             File.WriteAllText(ManifestPath, manifestJson.ToString());
-            
-            Directory.Delete(repoPath);
         }
 
         private static void CloneRepository(string gitUrl, string clonePath) {
