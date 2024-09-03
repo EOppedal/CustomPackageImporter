@@ -32,26 +32,25 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            var repoPath = Path.Combine(ResourcesPath, "/tempRepo");
+            var repoPath = ResourcesPath + "tempRepo";
 
             try {
                 CloneRepository(gitUrl, repoPath);
 
-                // Read and parse package.json
-                string packageJsonPath = Path.Combine(repoPath, PackagePath);
+                var packageJsonPath = repoPath + PackagePath;
                 if (!File.Exists(packageJsonPath)) {
                     UnityEngine.Debug.LogError("package.json not found in the repository!");
                     return;
                 }
 
-                string json = File.ReadAllText(packageJsonPath);
-                JObject packageJson = JObject.Parse(json);
+                var json = File.ReadAllText(packageJsonPath);
+                var packageJson = JObject.Parse(json);
 
                 // If no dependencies, skip the manifest update
                 if (packageJson["dependencies"] is not JObject dependencies) return;
 
                 // Read and update manifest.json
-                JObject manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
+                var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
 
                 // Add each dependency to manifest.json
                 foreach (var dependency in dependencies) {
