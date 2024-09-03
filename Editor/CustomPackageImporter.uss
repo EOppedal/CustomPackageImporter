@@ -1,6 +1,6 @@
 .text {
     -unity-text-align: upper-center;
-    -unity-font-definition: url("project://database/Packages/com.erlend-eiken-oppedal.debuglogger/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&guid=5f2ba05984567144fba2558348923b14&type=3#HomeVideo-BLG6G");
+    -unity-font-definition: url("project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&guid=a2c8e4c4789a7de49b190104473bfa9e&type=3#HomeVideo-BLG6G");
     color: rgb(255, 255, 255);
     font-size: 20px;
     margin-top: 11px;
