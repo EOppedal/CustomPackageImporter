@@ -23,6 +23,8 @@ namespace Editor {
         private JObject _manifestJson;
         private static readonly List<Button> Buttons = new();
         
+        private JToken Dependencies => _manifestJson["dependencies"];
+        
         [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
             var wnd = GetWindow<CustomPackageImporter>("CustomPackageImporter");
@@ -30,13 +32,12 @@ namespace Editor {
         }
 
         private void Update() {
-            var dependencies = _manifestJson["dependencies"];
-            if (dependencies == null) {
+            if (Dependencies == null) {
                 Debug.LogWarning("Dependencies not found in manifest.");
                 return;
             }
 
-            var urls = ExtractUrls(dependencies.ToString());
+            var urls = ExtractUrls(Dependencies.ToString());
 
             foreach (var button in Buttons) {
                 button.enabledSelf = urls.All(x => x != button.tooltip);
