@@ -1,0 +1,11 @@
+{
+  "name": "com.erlend-eiken-oppedal.custompackageimporter",
+  "version": "1.0.0",
+  "displayName": "Custom Package Importer",
+  "author": {
+    "name": "Erlend Eiken Oppedal",
+    "email": "erlend.oppedal@gmail.com"
+  },
+  "dependencies": {
+  }
+}
