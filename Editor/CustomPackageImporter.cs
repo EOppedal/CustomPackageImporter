@@ -68,7 +68,7 @@ namespace Editor {
 
                 File.WriteAllText(ManifestPath, manifestJson.ToString());
 
-                UnityEngine.Debug.Log("Dependencies installed successfully!");
+                UnityEngine.Debug.Log("Installation success!");
             }
             catch (Exception ex) {
                 UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
