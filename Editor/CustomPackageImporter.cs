@@ -37,7 +37,7 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            var repoPath = "Assets/" + gitUrl;
+            var repoPath = "Assets/" + new GUID();
             TryDeleteTempRepo(repoPath);
 
             var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
