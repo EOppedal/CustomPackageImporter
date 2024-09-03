@@ -1,11 +1,14 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
+using Debug = UnityEngine.Debug;
 
 namespace Editor {
     public class CustomPackageImporter : EditorWindow {
@@ -17,11 +20,18 @@ namespace Editor {
         private const string IconPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/Icon.png";
         
         private JObject _manifestJson;
+        private static readonly List<Button> Buttons = new();
         
         [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
             var wnd = GetWindow<CustomPackageImporter>("CustomPackageImporter");
             wnd.titleContent.image = AssetDatabase.LoadAssetAtPath<Texture>(IconPath);
+        }
+
+        private void Update() {
+            foreach (var button in Buttons) {
+                button.enabledSelf = _manifestJson["dependencies"]!.All(x => x.ToString() == button.tooltip);
+            }
         }
 
         public void CreateGUI() {
@@ -81,7 +91,9 @@ namespace Editor {
             };
             button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
             button.AddToClassList("button");
+            button.tooltip = package.gitUrl;
             rootVisualElement.Add(button);
+            Buttons.Add(button);
         }
 
         private static void TryDeleteTempRepo(string repoPath) {
