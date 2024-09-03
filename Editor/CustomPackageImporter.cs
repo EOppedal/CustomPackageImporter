@@ -32,7 +32,7 @@ namespace Editor {
             var repoPath = ResourcesPath + "/tempRepo";
             CloneRepository(gitUrl, repoPath);
 
-            var json = File.ReadAllText(Directory.GetCurrentDirectory() + PackagePath);
+            var json = File.ReadAllText(repoPath + PackagePath);
             var packageJson = JObject.Parse(json);
 
             if (packageJson["dependencies"] is not JObject dependencies) return;
