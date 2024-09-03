@@ -29,6 +29,7 @@ namespace Editor {
         }
 
         private void Update() {
+            Debug.Log(_manifestJson["dependencies"]);
             foreach (var button in Buttons) {
                 button.enabledSelf = _manifestJson["dependencies"]!.All(x => x.ToString() != button.tooltip);
             }
