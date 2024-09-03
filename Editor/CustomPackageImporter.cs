@@ -13,6 +13,7 @@ namespace Editor {
 
         private const string ManifestPath = "Packages/manifest.json";
         private const string PackagePath = "/package.json";
+        private const string CustomPackagesScrubPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
 
         [MenuItem("Window/MyWindows/CustomPackageImporter")]
         public static void ShowExample() {
@@ -26,6 +27,12 @@ namespace Editor {
             var textField = rootVisualElement.Q<TextField>("TextField");
             var importButton = rootVisualElement.Q<Button>("ImportButton");
             importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
+            
+            var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
+
+            foreach (var customPackage in customPackages.packages) {
+                CreateCustomPackageImportShortcut(customPackage);
+            }
         }
 
         private static void InstallGitPackage(string gitUrl) {
@@ -63,6 +70,14 @@ namespace Editor {
             finally {
                 DeleteTempRepo(repoPath);
             }
+        }
+
+        private void CreateCustomPackageImportShortcut(CustomPackages.CustomPackage package) {
+            var button = new Button {
+                text = package.packageName
+            };
+            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
+            rootVisualElement.Add(button);
         }
 
         private static void DeleteTempRepo(string repoPath) {
