@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -35,19 +36,13 @@ namespace Editor {
                 return;
             }
 
-            Debug.Log(dependencies.ToString());
-
             foreach (var button in Buttons) {
+                var regex = new Regex("https://[^\"]+");
                 foreach (var variable in dependencies) {
-                    
+                    var match = regex.Match(variable.ToString());
+                    button.enabledSelf = match.Success;
+                    Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
                 }
-                button.enabledSelf = dependencies
-                    .Children<JProperty>()
-                    .Any(dep => dep.ToString() != button.tooltip);
-                
-                Debug.LogWarning(dependencies.First?.ToString());
-
-                Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
         }
 
