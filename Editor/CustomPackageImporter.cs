@@ -82,6 +82,7 @@ namespace Editor {
                 text = package.packageName
             };
             button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
+            button.AddToClassList("button");
             rootVisualElement.Add(button);
         }
 

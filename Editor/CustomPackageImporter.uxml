@@ -1,7 +1,8 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackageImporter.uss?fileID=7433441132597879392&amp;guid=88c02682fedb6a7418243ccfdf28d53b&amp;type=3#CustomPackageImporter" />
     <engine:Label text="Custom Package Importer" class="text" />
-    <engine:TextField label="Text Field" name="TextField" />
-    <engine:Button text="Import" name="ImportButton" />
+    <engine:TextField label="Git Url:" name="TextField" style="font-size: 22px; -unity-font-definition: url(&quot;project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&amp;guid=a2c8e4c4789a7de49b190104473bfa9e&amp;type=3#HomeVideo-BLG6G&quot;);" />
+    <engine:Button text="Import" name="ImportButton" class="button" style="margin-left: 32px;" />
+    <engine:VisualElement style="flex-grow: 1; background-color: rgb(153, 153, 153); width: 90%; align-self: center; height: 5px; min-height: 5px; max-height: 5px; border-top-left-radius: 2px; border-top-right-radius: 2px; border-bottom-right-radius: 2px; border-bottom-left-radius: 2px; margin-top: 14px; margin-right: 14px; margin-bottom: 14px; margin-left: 14px;" />
     <engine:Label text="Shortcut Imports" class="text" style="-unity-text-align: upper-center;" />
 </engine:UXML>

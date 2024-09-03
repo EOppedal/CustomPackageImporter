@@ -2,9 +2,27 @@
     -unity-text-align: upper-center;
     -unity-font-definition: url("project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&guid=a2c8e4c4789a7de49b190104473bfa9e&type=3#HomeVideo-BLG6G");
     color: rgb(255, 255, 255);
-    font-size: 20px;
+    font-size: 32px;
     margin-top: 11px;
     margin-right: 11px;
     margin-bottom: 11px;
     margin-left: 11px;
+    flex-wrap: wrap;
+}
+
+.button {
+    -unity-font-definition: url("project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&guid=a2c8e4c4789a7de49b190104473bfa9e&type=3#HomeVideo-BLG6G");
+    padding-top: 14px;
+    padding-right: 14px;
+    padding-bottom: 14px;
+    padding-left: 14px;
+    font-size: 27px;
+    margin-top: 3px;
+    margin-right: 32px;
+    margin-bottom: 3px;
+    margin-left: 48px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
 }
