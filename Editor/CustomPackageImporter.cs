@@ -16,6 +16,8 @@ namespace Editor {
         private const string PackagePath = "/package.json";
         private const string CustomPackagesScrubPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
 
+        private JObject _manifestJson;
+        
         [MenuItem("Window/MyWindows/CustomPackageImporter")]
         public static void ShowExample() {
             var wnd = GetWindow<CustomPackageImporter>();
@@ -27,6 +29,8 @@ namespace Editor {
 
             var textField = rootVisualElement.Q<TextField>("TextField");
             var importButton = rootVisualElement.Q<Button>("ImportButton");
+            
+            _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
             importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
             
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
@@ -36,11 +40,10 @@ namespace Editor {
             }
         }
 
-        private static void InstallGitPackage(string gitUrl) {
+        private void InstallGitPackage(string gitUrl) {
             const string repoPath = "Assets/tempFolder";
 
-            var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            if (manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
+            if (_manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
                 UnityEngine.Debug.LogWarning("The git package is already installed");
                 return;
             }
@@ -66,9 +69,9 @@ namespace Editor {
                     }
                 }
 
-                manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
+                _manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
 
-                File.WriteAllText(ManifestPath, manifestJson.ToString());
+                File.WriteAllText(ManifestPath, _manifestJson.ToString());
 
                 UnityEngine.Debug.Log("Installation success!");
             }
