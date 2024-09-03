@@ -36,21 +36,27 @@ namespace Editor {
                 return;
             }
 
-            var regex = new Regex("https://[^\"]+");
-            foreach (var button in Buttons) {
-                button.enabledSelf = false;
-                foreach (var s in ExtractUrls(dependencies.ToString())) {
-                    var match = regex.Match(s.ToString());
-                    
-                    if (!match.Success) continue;
-                    
-                    if (match.Value == button.tooltip) {
-                        button.enabledSelf = true;
-                        Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
-                    }
-                    break;
-                }
+            var urls = ExtractUrls(dependencies.ToString());
+
+            foreach (var s in urls) {
+                Debug.Log(s);
             }
+
+            // var regex = new Regex("https://[^\"]+");
+            // foreach (var button in Buttons) {
+            //     button.enabledSelf = false;
+            //     foreach (var s in ExtractUrls(dependencies.ToString())) {
+            //         var match = regex.Match(s.ToString());
+            //         
+            //         if (!match.Success) continue;
+            //         
+            //         if (match.Value == button.tooltip) {
+            //             button.enabledSelf = true;
+            //             Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
+            //         }
+            //         break;
+            //     }
+            // }
         }
 
         static List<string> ExtractUrls(string input) {
