@@ -14,13 +14,14 @@ namespace Editor {
         private const string ManifestPath = "Packages/manifest.json";
         private const string PackagePath = "/package.json";
         private const string CustomPackagesScrubPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
-
+        private const string IconPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/Icon.png";
+        
         private JObject _manifestJson;
         
         [MenuItem("Window/MyWindows/CustomPackageImporter")]
         public static void ShowExample() {
-            var wnd = GetWindow<CustomPackageImporter>();
-            wnd.titleContent = new GUIContent("CustomPackageImporter");
+            var wnd = GetWindow<CustomPackageImporter>("CustomPackageImporter");
+            wnd.titleContent.image = AssetDatabase.LoadAssetAtPath<Texture>(IconPath);
         }
 
         public void CreateGUI() {
