@@ -36,6 +36,12 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
+            var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
+            if (manifestJson.TryGetValue(gitUrl, out var manifest)) {
+                UnityEngine.Debug.LogWarning("Git package already exists in manifest.json");
+                return;
+            }
+            
             const string repoPath = "Assets/tempRepo";
 
             try {
@@ -51,8 +57,6 @@ namespace Editor {
                 var packageJson = JObject.Parse(json);
 
                 if (packageJson["dependencies"] is not JObject dependencies) return;
-
-                var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
 
                 foreach (var dependency in dependencies) {
                     manifestJson["dependencies"]![dependency.Key] = dependency.Value;
