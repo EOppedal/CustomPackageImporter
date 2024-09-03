@@ -17,3 +17,17 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
   - packageName: ClampedFloat
     gitUrl: https://github.com/EOppedal/ClampedFloat.git
+  - packageName: Observable
+    gitUrl: https://github.com/EOppedal/Observable.git
+  - packageName: Serializers
+    gitUrl: https://github.com/EOppedal/Serializers.git
+  - packageName: ExtentionMethods
+    gitUrl: https://github.com/EOppedal/ExtentionMethods.git
+  - packageName: DebugLogger
+    gitUrl: https://github.com/EOppedal/DebugLogger.git
+  - packageName: ScrubUtils
+    gitUrl: https://github.com/EOppedal/ScrubUtils.git
+  - packageName: Timers
+    gitUrl: https://github.com/EOppedal/Timers.git
+  - packageName: Singletons
+    gitUrl: https://github.com/EOppedal/Singletons.git

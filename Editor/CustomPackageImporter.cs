@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -37,8 +38,8 @@ namespace Editor {
 
         private static void InstallGitPackage(string gitUrl) {
             var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            if (manifestJson.TryGetValue(gitUrl, out var manifest)) {
-                UnityEngine.Debug.LogWarning("Git package already exists in manifest.json");
+            if (manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
+                UnityEngine.Debug.LogWarning("The git package is already installed");
                 return;
             }
             

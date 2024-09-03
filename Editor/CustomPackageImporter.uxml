@@ -1,7 +1,7 @@
 <engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
     <Style src="project://database/Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackageImporter.uss?fileID=7433441132597879392&amp;guid=88c02682fedb6a7418243ccfdf28d53b&amp;type=3#CustomPackageImporter" />
-    <engine:Label text="Custom Package Importer" style="-unity-text-align: upper-center; -unity-font-definition: url(&quot;project://database/Packages/com.erlend-eiken-oppedal.debuglogger/Editor/home-video-font/HomeVideo-BLG6G.ttf?fileID=12800000&amp;guid=5f2ba05984567144fba2558348923b14&amp;type=3#HomeVideo-BLG6G&quot;); color: rgb(255, 255, 255); font-size: 20px; margin-top: 11px; margin-right: 11px; margin-bottom: 11px; margin-left: 11px;" />
+    <engine:Label text="Custom Package Importer" class="text" />
     <engine:TextField label="Text Field" name="TextField" />
-    <engine:Button text="Button" name="ImportButton" />
-    <engine:Label text="Shortcut Imports" style="-unity-text-align: upper-center;" />
+    <engine:Button text="Import" name="ImportButton" />
+    <engine:Label text="Shortcut Imports" class="text" style="-unity-text-align: upper-center;" />
 </engine:UXML>
