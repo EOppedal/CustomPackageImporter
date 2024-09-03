@@ -40,11 +40,10 @@ namespace Editor {
 
             foreach (var button in Buttons) {
                 button.enabledSelf = urls.All(x => x != button.tooltip);
-                Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
         }
 
-        static List<string> ExtractUrls(string input) {
+        private static List<string> ExtractUrls(string input) {
             var urlList = new List<string>();
             var regex = new Regex(@"https?:\/\/[^\s""']+");
             var matches = regex.Matches(input);
