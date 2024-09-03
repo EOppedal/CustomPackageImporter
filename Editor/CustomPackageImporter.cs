@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
@@ -17,14 +18,17 @@ namespace Editor {
 
         private const string ManifestPath = "Packages/manifest.json";
         private const string PackagePath = "/package.json";
-        private const string CustomPackagesScrubPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
+
+        private const string CustomPackagesScrubPath =
+            "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
+
         private const string IconPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/Icon.png";
-        
+
         private JObject _manifestJson;
         private static readonly List<Button> Buttons = new();
-        
+
         private JToken Dependencies => _manifestJson["dependencies"];
-        
+
         [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
             var wnd = GetWindow<CustomPackageImporter>("CustomPackageImporter");
@@ -56,15 +60,32 @@ namespace Editor {
             return urlList;
         }
 
+        private void UpdatePackages() {
+            var request = Client.List(true);
+            EditorApplication.update += () => {
+                if (!request.IsCompleted) return;
+                EditorApplication.update -= () => { };
+                if (request.Status == StatusCode.Success) {
+                    Debug.Log("Package added successfully.");
+                }
+                else {
+                    Debug.LogError("Failed to add package: " + request.Error.message);
+                }
+            };
+        }
+
         public void CreateGUI() {
             visualTreeAsset.CloneTree(rootVisualElement);
 
             var textField = rootVisualElement.Q<TextField>("TextField");
             var importButton = rootVisualElement.Q<Button>("ImportButton");
-            
+
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
-            
+            importButton.RegisterCallback<ClickEvent>(_ => {
+                InstallGitPackage(textField.value);
+                UpdatePackages();
+            });
+
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
 
             foreach (var customPackage in customPackages.packages) {
@@ -86,7 +107,7 @@ namespace Editor {
 
                 var json = File.ReadAllText(packageJsonPath);
                 var packageJson = JObject.Parse(json);
-                
+
                 TryDeleteTempRepo(repoPath);
 
                 if (packageJson["dependencies"] is JObject dependencies) {
@@ -111,7 +132,10 @@ namespace Editor {
             var button = new Button {
                 text = package.packageName
             };
-            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
+            button.RegisterCallback<ClickEvent>(_ => {
+                InstallGitPackage(package.gitUrl);
+                UpdatePackages();
+            });
             button.AddToClassList("button");
             button.tooltip = package.gitUrl;
             rootVisualElement.Add(button);
