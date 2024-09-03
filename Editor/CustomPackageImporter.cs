@@ -39,8 +39,8 @@ namespace Editor {
             var regex = new Regex("https://[^\"]+");
             foreach (var button in Buttons) {
                 button.enabledSelf = false;
-                foreach (var variable in dependencies) {
-                    var match = regex.Match(variable.ToString());
+                foreach (var s in ExtractUrls(dependencies.ToString())) {
+                    var match = regex.Match(s.ToString());
                     
                     if (!match.Success) continue;
                     
@@ -53,6 +53,17 @@ namespace Editor {
             }
         }
 
+        static List<string> ExtractUrls(string input) {
+            var urlList = new List<string>();
+            var regex = new Regex(@"https?:\/\/[^\s""']+");
+            var matches = regex.Matches(input);
+
+            foreach (Match match in matches) {
+                urlList.Add(match.Value);
+            }
+
+            return urlList;
+        }
 
         public void CreateGUI() {
             visualTreeAsset.CloneTree(rootVisualElement);
