@@ -79,7 +79,7 @@ namespace Editor {
 
                 var packageJsonPath = repoPath + PackagePath;
                 if (!File.Exists(packageJsonPath)) {
-                    UnityEngine.Debug.LogError("package.json not found in the repository!");
+                    Debug.LogError("package.json not found in the repository!");
                     return;
                 }
 
@@ -98,10 +98,10 @@ namespace Editor {
 
                 File.WriteAllText(ManifestPath, _manifestJson.ToString());
 
-                UnityEngine.Debug.Log("Installation success!");
+                Debug.Log("Installation success!");
             }
             catch (Exception ex) {
-                UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
+                Debug.LogError($"An error occurred: {ex.Message}");
                 TryDeleteTempRepo(repoPath);
             }
         }
@@ -136,10 +136,10 @@ namespace Editor {
             process.WaitForExit();
 
             if (process.ExitCode == 0) {
-                UnityEngine.Debug.Log($"Repository cloned to: {clonePath}");
+                // Debug.Log($"Repository cloned to: {clonePath}");
             }
             else {
-                UnityEngine.Debug.LogError($"Error cloning repository: {process.StandardError.ReadToEnd()}");
+                Debug.LogError($"Error cloning repository: {process.StandardError.ReadToEnd()}");
             }
         }
     }
