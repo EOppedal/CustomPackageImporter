@@ -1,9 +1,11 @@
 #if UNITY_EDITOR
 using System;
+using System.Collections;
 using System.Diagnostics;
 using System.IO;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
+using UnityEditor.VersionControl;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -68,9 +70,15 @@ namespace Editor {
                 UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
             }
             finally {
-                if (Directory.Exists(repoPath)) {
-                    Directory.Delete(repoPath, true);
-                }
+                DeleteTempRepo(repoPath);
+            }
+        }
+
+        private static void DeleteTempRepo(string repoPath) {
+            Awaitable.NextFrameAsync();
+            
+            if (Directory.Exists(repoPath)) {
+                Directory.Delete(repoPath, true);
             }
         }
 
