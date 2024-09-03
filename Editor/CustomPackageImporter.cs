@@ -45,7 +45,7 @@ namespace Editor {
                     .Children<JProperty>()
                     .Any(dep => dep.ToString() != button.tooltip);
                 
-                Debug.LogWarning(dependencies.First);
+                Debug.LogWarning(dependencies.First?.ToString());
 
                 Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
             }
