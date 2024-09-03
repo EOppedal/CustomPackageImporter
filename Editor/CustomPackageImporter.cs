@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
@@ -60,20 +59,6 @@ namespace Editor {
             return urlList;
         }
 
-        private void UpdatePackages() {
-            var request = Client.List(true);
-            EditorApplication.update += () => {
-                if (!request.IsCompleted) return;
-                EditorApplication.update -= () => { };
-                if (request.Status == StatusCode.Success) {
-                    Debug.Log("Package added successfully.");
-                }
-                else {
-                    Debug.LogError("Failed to add package: " + request.Error.message);
-                }
-            };
-        }
-
         public void CreateGUI() {
             visualTreeAsset.CloneTree(rootVisualElement);
 
@@ -81,10 +66,7 @@ namespace Editor {
             var importButton = rootVisualElement.Q<Button>("ImportButton");
 
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            importButton.RegisterCallback<ClickEvent>(_ => {
-                InstallGitPackage(textField.value);
-                UpdatePackages();
-            });
+            importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
 
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
 
@@ -132,10 +114,7 @@ namespace Editor {
             var button = new Button {
                 text = package.packageName
             };
-            button.RegisterCallback<ClickEvent>(_ => {
-                InstallGitPackage(package.gitUrl);
-                UpdatePackages();
-            });
+            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
             button.AddToClassList("button");
             button.tooltip = package.gitUrl;
             rootVisualElement.Add(button);
