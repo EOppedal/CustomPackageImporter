@@ -30,10 +30,7 @@ namespace Editor {
             var importButton = rootVisualElement.Q<Button>("ImportButton");
             
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            importButton.RegisterCallback<ClickEvent>(_ => {
-                InstallGitPackage(textField.value);
-                AssetDatabase.Refresh();
-            });
+            importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
             
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
 
@@ -81,10 +78,7 @@ namespace Editor {
             var button = new Button {
                 text = package.packageName
             };
-            button.RegisterCallback<ClickEvent>(_ => {
-                InstallGitPackage(package.gitUrl);
-                AssetDatabase.Refresh();
-            });
+            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
             button.AddToClassList("button");
             rootVisualElement.Add(button);
         }
