@@ -37,13 +37,14 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
+            const string repoPath = "Assets/tempRepo";
+            TryDeleteTempRepo(repoPath);
+
             var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
             if (manifestJson.Properties().Any(x => x.Value.ToString() == gitUrl)) {
                 UnityEngine.Debug.LogWarning("The git package is already installed");
                 return;
             }
-            
-            const string repoPath = "Assets/tempRepo";
 
             try {
                 CloneRepository(gitUrl, repoPath);
@@ -93,8 +94,6 @@ namespace Editor {
         }
 
         private static void CloneRepository(string gitUrl, string clonePath) {
-            TryDeleteTempRepo(clonePath);
-            
             var process = new Process();
             process.StartInfo.FileName = "git";
             process.StartInfo.Arguments = $"clone {gitUrl} {clonePath}";
