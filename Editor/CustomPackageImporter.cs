@@ -38,11 +38,18 @@ namespace Editor {
 
             var regex = new Regex("https://[^\"]+");
             foreach (var button in Buttons) {
-                var hasHttpsLink = dependencies.Select(variable => regex.Match(variable.ToString()))
-                    .Any(match => match.Success);
-
-                button.enabledSelf = hasHttpsLink;
-                Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
+                button.enabledSelf = false;
+                foreach (var variable in dependencies) {
+                    var match = regex.Match(variable.ToString());
+                    
+                    if (!match.Success) continue;
+                    
+                    if (match.Value == button.tooltip) {
+                        button.enabledSelf = true;
+                        Debug.Log($"{button.tooltip} enabled: {button.enabledSelf}");
+                    }
+                    break;
+                }
             }
         }
 
