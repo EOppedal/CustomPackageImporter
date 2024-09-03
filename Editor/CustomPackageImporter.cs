@@ -18,7 +18,7 @@ namespace Editor {
         
         private JObject _manifestJson;
         
-        [MenuItem("Window/MyWindows/CustomPackageImporter")]
+        [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
             var wnd = GetWindow<CustomPackageImporter>("CustomPackageImporter");
             wnd.titleContent.image = AssetDatabase.LoadAssetAtPath<Texture>(IconPath);
