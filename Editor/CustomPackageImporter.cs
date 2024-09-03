@@ -73,7 +73,7 @@ namespace Editor {
                 UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
             }
             finally {
-                DeleteTempRepo(repoPath);
+                TryDeleteTempRepo(repoPath);
             }
         }
 
@@ -85,15 +85,15 @@ namespace Editor {
             rootVisualElement.Add(button);
         }
 
-        private static void DeleteTempRepo(string repoPath) {
-            Awaitable.NextFrameAsync();
-            
+        private static void TryDeleteTempRepo(string repoPath) {
             if (Directory.Exists(repoPath)) {
                 Directory.Delete(repoPath, true);
             }
         }
 
         private static void CloneRepository(string gitUrl, string clonePath) {
+            TryDeleteTempRepo(clonePath);
+            
             var process = new Process();
             process.StartInfo.FileName = "git";
             process.StartInfo.Arguments = $"clone {gitUrl} {clonePath}";
