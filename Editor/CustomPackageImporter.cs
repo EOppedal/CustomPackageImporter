@@ -1,4 +1,5 @@
 #if UNITY_EDITOR
+using System;
 using System.Diagnostics;
 using System.IO;
 using Unity.Plastic.Newtonsoft.Json.Linq;
@@ -11,7 +12,7 @@ namespace Editor {
         [SerializeField] private VisualTreeAsset visualTreeAsset;
 
         private const string ManifestPath = "Packages/manifest.json";
-        private const string PackagePath =  "/package.json";
+        private const string PackagePath = "/package.json";
         private const string ResourcesPath = "Assets/Resources";
 
         [MenuItem("Window/MyWindows/CustomPackageImporter")]
@@ -29,24 +30,48 @@ namespace Editor {
         }
 
         private static void InstallGitPackage(string gitUrl) {
-            var repoPath = ResourcesPath + "/tempRepo";
-            CloneRepository(gitUrl, repoPath);
+            var repoPath = Path.Combine(ResourcesPath, "tempRepo");
 
-            var json = File.ReadAllText(repoPath + PackagePath);
-            var packageJson = JObject.Parse(json);
-            
-            Directory.Delete(repoPath);
+            try {
+                CloneRepository(gitUrl, repoPath);
 
-            if (packageJson["dependencies"] is not JObject dependencies) return;
-            var manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
+                // Read and parse package.json
+                string packageJsonPath = Path.Combine(repoPath, PackagePath);
+                if (!File.Exists(packageJsonPath)) {
+                    UnityEngine.Debug.LogError("package.json not found in the repository!");
+                    return;
+                }
 
-            foreach (var dependency in dependencies) {
-                manifestJson["dependencies"][dependency.Key] = dependency.Value;
+                string json = File.ReadAllText(packageJsonPath);
+                JObject packageJson = JObject.Parse(json);
+
+                // If no dependencies, skip the manifest update
+                if (packageJson["dependencies"] is not JObject dependencies) return;
+
+                // Read and update manifest.json
+                JObject manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
+
+                // Add each dependency to manifest.json
+                foreach (var dependency in dependencies) {
+                    manifestJson["dependencies"][dependency.Key] = dependency.Value;
+                }
+
+                // Add the main package to manifest.json
+                manifestJson["dependencies"][packageJson["name"].ToString()] = gitUrl;
+
+                // Write updated manifest.json back to the file
+                File.WriteAllText(ManifestPath, manifestJson.ToString());
+
+                UnityEngine.Debug.Log("Dependencies installed successfully!");
             }
-
-            manifestJson["dependencies"][packageJson["name"]] = gitUrl;
-
-            File.WriteAllText(ManifestPath, manifestJson.ToString());
+            catch (Exception ex) {
+                UnityEngine.Debug.LogError($"An error occurred: {ex.Message}");
+            }
+            finally {
+                if (Directory.Exists(repoPath)) {
+                    Directory.Delete(repoPath, true);
+                }
+            }
         }
 
         private static void CloneRepository(string gitUrl, string clonePath) {
