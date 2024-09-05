@@ -69,9 +69,11 @@ namespace Editor {
             importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
 
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
+            
+            var shortCutContainer = rootVisualElement.Q<VisualElement>("unity-content-container");
 
             foreach (var customPackage in customPackages.packages) {
-                CreateCustomPackageImportShortcut(customPackage);
+                CreateCustomPackageImportShortcut(customPackage, shortCutContainer);
             }
         }
 
@@ -110,14 +112,14 @@ namespace Editor {
             }
         }
 
-        private void CreateCustomPackageImportShortcut(CustomPackages.CustomPackage package) {
+        private void CreateCustomPackageImportShortcut(CustomPackages.CustomPackage package, VisualElement shortcutContainer) {
             var button = new Button {
                 text = package.packageName
             };
             button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
             button.AddToClassList("button");
             button.tooltip = package.gitUrl;
-            rootVisualElement.Add(button);
+            shortcutContainer.Add(button);
             Buttons.Add(button);
         }
 
