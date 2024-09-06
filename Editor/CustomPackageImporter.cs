@@ -11,7 +11,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Debug = UnityEngine.Debug;
 
-namespace Editor {
+namespace CustomPackageImporter.Editor {
     public class CustomPackageImporter : EditorWindow {
         [SerializeField] private VisualTreeAsset visualTreeAsset;
 

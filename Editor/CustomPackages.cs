@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace Editor {
+namespace CustomPackageImporter.Editor {
     public class CustomPackages : ScriptableObject {
         public CustomPackage[] packages;
         
