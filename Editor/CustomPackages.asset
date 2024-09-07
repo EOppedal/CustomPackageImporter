@@ -35,3 +35,5 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Encryption.git
   - packageName: EncryptedSerializer
     gitUrl: https://github.com/EOppedal/EncryptedSerializer.git
+  - packageName: Parallax
+    gitUrl: https://github.com/EOppedal/Parallax.git
