@@ -126,7 +126,7 @@ namespace CustomPackageImporter.Editor {
         }
 
 
-        private async void InstallGitPackageCallback(CustomPackages.CustomPackage package) => await InstallGitPackage(package.gitUrl);
+        private void InstallGitPackageCallback(CustomPackages.CustomPackage package) => _ = InstallGitPackage(package.gitUrl);
 
         private static void TryDeleteTempRepo(string repoPath) {
             if (Directory.Exists(repoPath)) {
