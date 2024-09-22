@@ -67,7 +67,7 @@ namespace CustomPackageImporter.Editor {
             var importButton = rootVisualElement.Q<Button>("ImportButton");
 
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            // importButton.clicked += () => _ = InstallGitPackage(textField.value);
+            importButton.clicked += () => _ = InstallGitPackage(textField.value);
 
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
             
@@ -78,14 +78,13 @@ namespace CustomPackageImporter.Editor {
             }
         }
 
-        private async Task InstallGitPackage(CustomPackages.CustomPackage package) {
-            var gitUrl = package.gitUrl;
-            var repoPath = "Packages/" + package.packageName;
+        private async Task InstallGitPackage(string gitUrl) {
+            const string repoPath = "Packages";
 
             try {
                 await CloneRepository(gitUrl, repoPath);
 
-                var packageJsonPath = repoPath + PackagePath;
+                const string packageJsonPath = repoPath + PackagePath;
                 if (!File.Exists(packageJsonPath)) {
                     Debug.LogError("package.json not found in the repository!");
                     return;
@@ -96,21 +95,9 @@ namespace CustomPackageImporter.Editor {
 
                 // TryDeleteTempRepo(repoPath);
 
-                // if (packageJson["dependencies"] is JObject dependencies) {
-                //     foreach (var dependency in dependencies) {
-                //         await InstallGitPackage(dependency.Value.ToString());
-                //     }
-                // }
-                
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
-                        var customPackage = new CustomPackages.CustomPackage {
-                            gitUrl = dependency.Value.ToString(),
-                            packageName = dependency.Key[(dependency.Key.LastIndexOf('.') + 1)..]
-                        };
-
-                        Debug.Log($"Installing dependency {customPackage.packageName}: {customPackage.gitUrl}");
-                        await InstallGitPackage(customPackage);
+                        await InstallGitPackage(dependency.Value?.ToString());
                     }
                 }
 
@@ -139,7 +126,7 @@ namespace CustomPackageImporter.Editor {
         }
 
 
-        private void InstallGitPackageCallback(CustomPackages.CustomPackage package) => _ = InstallGitPackage(package);
+        private void InstallGitPackageCallback(CustomPackages.CustomPackage package) => _ = InstallGitPackage(package.gitUrl);
 
         private static void TryDeleteTempRepo(string repoPath) {
             if (Directory.Exists(repoPath)) {
