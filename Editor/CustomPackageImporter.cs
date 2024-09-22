@@ -24,10 +24,10 @@ namespace CustomPackageImporter.Editor {
 
         private const string IconPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/Icon.png";
 
-        private JObject _manifestJson;
+        private static JObject manifestJson => JObject.Parse(File.ReadAllText(ManifestPath));
         private static readonly List<Button> Buttons = new();
 
-        private JToken dependenciesJToken => _manifestJson["dependencies"];
+        private static JToken dependenciesJToken => manifestJson["dependencies"];
 
         [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
@@ -63,10 +63,9 @@ namespace CustomPackageImporter.Editor {
         public void CreateGUI() {
             visualTreeAsset.CloneTree(rootVisualElement);
 
-            var textField = rootVisualElement.Q<TextField>("TextField");
-            var importButton = rootVisualElement.Q<Button>("ImportButton");
+            // var textField = rootVisualElement.Q<TextField>("TextField");
+            // var importButton = rootVisualElement.Q<Button>("ImportButton");
 
-            _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
             // importButton.clicked += () => _ = InstallGitPackage(textField.value);
 
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
@@ -80,7 +79,7 @@ namespace CustomPackageImporter.Editor {
 
         private async Task InstallGitPackage(CustomPackages.CustomPackage package) {
             var gitUrl = package.gitUrl;
-            var repoPath = "Packages/" + package.packageName;
+            var repoPath = "Packages/" + package.packageName.ToLower();
 
             try {
                 await CloneRepository(gitUrl, repoPath);
@@ -106,7 +105,7 @@ namespace CustomPackageImporter.Editor {
                     foreach (var dependency in dependencies) {
                         var customPackage = new CustomPackages.CustomPackage {
                             gitUrl = dependency.Value.ToString(),
-                            packageName = dependency.Key[(dependency.Key.LastIndexOf('.') + 1)..]
+                            packageName = dependency.Key[(dependency.Key.LastIndexOf('.') + 1)..].ToLower()
                         };
 
                         Debug.Log($"Installing dependency {customPackage.packageName}: {customPackage.gitUrl}");
@@ -114,9 +113,9 @@ namespace CustomPackageImporter.Editor {
                     }
                 }
 
-                _manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
+                manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
 
-                await File.WriteAllTextAsync(ManifestPath, _manifestJson.ToString());
+                await File.WriteAllTextAsync(ManifestPath, manifestJson.ToString());
 
                 Debug.Log("Installation success!");
             }
