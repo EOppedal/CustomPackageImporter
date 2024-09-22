@@ -36,6 +36,8 @@ namespace CustomPackageImporter.Editor {
         }
 
         private void Update() {
+            if (_manifestJson == null) return;
+            
             if (dependenciesJToken == null) {
                 Debug.LogWarning("Dependencies not found in manifest.");
                 return;
