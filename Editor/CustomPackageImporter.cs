@@ -79,7 +79,7 @@ namespace CustomPackageImporter.Editor {
         }
 
         private async Task InstallGitPackage(string gitUrl) {
-            const string repoPath = "Packages";
+            const string repoPath = "Assets/tempFolder";
 
             try {
                 await CloneRepository(gitUrl, repoPath);
@@ -93,7 +93,7 @@ namespace CustomPackageImporter.Editor {
                 var json = await File.ReadAllTextAsync(packageJsonPath);
                 var packageJson = JObject.Parse(json);
 
-                // TryDeleteTempRepo(repoPath);
+                TryDeleteTempRepo(repoPath);
 
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
