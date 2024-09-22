@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Unity.Plastic.Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEngine;
@@ -26,7 +27,7 @@ namespace CustomPackageImporter.Editor {
         private JObject _manifestJson;
         private static readonly List<Button> Buttons = new();
 
-        private JToken Dependencies => _manifestJson["dependencies"];
+        private JToken dependenciesJToken => _manifestJson["dependencies"];
 
         [MenuItem("Window/Custom Package Importer")]
         public static void ShowExample() {
@@ -35,12 +36,12 @@ namespace CustomPackageImporter.Editor {
         }
 
         private void Update() {
-            if (Dependencies == null) {
+            if (dependenciesJToken == null) {
                 Debug.LogWarning("Dependencies not found in manifest.");
                 return;
             }
 
-            var urls = ExtractUrls(Dependencies.ToString());
+            var urls = ExtractUrls(dependenciesJToken.ToString());
 
             foreach (var button in Buttons) {
                 button.enabledSelf = urls.All(x => x != button.tooltip);
@@ -66,7 +67,7 @@ namespace CustomPackageImporter.Editor {
             var importButton = rootVisualElement.Q<Button>("ImportButton");
 
             _manifestJson = JObject.Parse(File.ReadAllText(ManifestPath));
-            importButton.RegisterCallback<ClickEvent>(_ => InstallGitPackage(textField.value));
+            importButton.clicked += () => _ = InstallGitPackage(textField.value);
 
             var customPackages = AssetDatabase.LoadAssetAtPath<CustomPackages>(CustomPackagesScrubPath);
             
@@ -77,32 +78,32 @@ namespace CustomPackageImporter.Editor {
             }
         }
 
-        private void InstallGitPackage(string gitUrl) {
+        private async Task InstallGitPackage(string gitUrl) {
             const string repoPath = "Assets/tempFolder";
 
             try {
-                CloneRepository(gitUrl, repoPath);
+                await CloneRepository(gitUrl, repoPath);
 
-                var packageJsonPath = repoPath + PackagePath;
+                const string packageJsonPath = repoPath + PackagePath;
                 if (!File.Exists(packageJsonPath)) {
                     Debug.LogError("package.json not found in the repository!");
                     return;
                 }
 
-                var json = File.ReadAllText(packageJsonPath);
+                var json = await File.ReadAllTextAsync(packageJsonPath);
                 var packageJson = JObject.Parse(json);
 
                 TryDeleteTempRepo(repoPath);
 
                 if (packageJson["dependencies"] is JObject dependencies) {
                     foreach (var dependency in dependencies) {
-                        InstallGitPackage(dependency.Value?.ToString());
+                        await InstallGitPackage(dependency.Value?.ToString());
                     }
                 }
 
                 _manifestJson["dependencies"]![packageJson["name"]?.ToString()!] = gitUrl;
 
-                File.WriteAllText(ManifestPath, _manifestJson.ToString());
+                await File.WriteAllTextAsync(ManifestPath, _manifestJson.ToString());
 
                 Debug.Log("Installation success!");
             }
@@ -116,12 +117,16 @@ namespace CustomPackageImporter.Editor {
             var button = new Button {
                 text = package.packageName
             };
-            button.RegisterCallback<ClickEvent>(_ => InstallGitPackage(package.gitUrl));
+
+            button.clicked += () => InstallGitPackageCallback(package);
             button.AddToClassList("button");
             button.tooltip = package.gitUrl;
             shortcutContainer.Add(button);
             Buttons.Add(button);
         }
+
+
+        private async void InstallGitPackageCallback(CustomPackages.CustomPackage package) => await InstallGitPackage(package.gitUrl);
 
         private static void TryDeleteTempRepo(string repoPath) {
             if (Directory.Exists(repoPath)) {
@@ -129,7 +134,7 @@ namespace CustomPackageImporter.Editor {
             }
         }
 
-        private static void CloneRepository(string gitUrl, string clonePath) {
+        private static async Task CloneRepository(string gitUrl, string clonePath) {
             var process = new Process();
             process.StartInfo.FileName = "git";
             process.StartInfo.Arguments = $"clone {gitUrl} {clonePath}";
@@ -141,11 +146,8 @@ namespace CustomPackageImporter.Editor {
             process.Start();
             process.WaitForExit();
 
-            if (process.ExitCode == 0) {
-                // Debug.Log($"Repository cloned to: {clonePath}");
-            }
-            else {
-                Debug.LogError($"Error cloning repository: {process.StandardError.ReadToEnd()}");
+            if (process.ExitCode != 0) {
+                Debug.LogError($"Error cloning repository: {await process.StandardError.ReadToEndAsync()}");
             }
         }
     }
