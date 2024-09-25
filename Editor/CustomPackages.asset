@@ -39,7 +39,7 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Parallax.git
   - packageName: ServiceLocator
     gitUrl: https://github.com/EOppedal/ServiceLocator.git
-  - packageName: Converters
-    gitUrl: https://github.com/EOppedal/Converters.git
+  - packageName: UIToolkitTools
+    gitUrl: https://github.com/EOppedal/UIToolkitTools.git
   - packageName: RuntimeSet
     gitUrl: https://github.com/EOppedal/RuntimeSet.git
