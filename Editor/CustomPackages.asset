@@ -19,8 +19,8 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Observable.git
   - packageName: ScrubGlobalData
     gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
-  - packageName: ExtentionMethods
-    gitUrl: https://github.com/EOppedal/ExtentionMethods.git
+  - packageName: Extensions And Attributes
+    gitUrl: https://github.com/EOppedal/ExtensionsAndAttributes.git
   - packageName: DebugLogger
     gitUrl: https://github.com/EOppedal/DebugLogger.git
   - packageName: ScrubUtils
