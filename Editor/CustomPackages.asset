@@ -43,3 +43,5 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/UIToolkitTools.git
   - packageName: RuntimeSet
     gitUrl: https://github.com/EOppedal/RuntimeSet.git
+  - packageName: HealthComponent
+    gitUrl: https://github.com/EOppedal/HealthComponent.git
