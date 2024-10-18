@@ -29,12 +29,8 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/Timers.git
   - packageName: Singletons
     gitUrl: https://github.com/EOppedal/Singletons.git
-  - packageName: Serializers
-    gitUrl: https://github.com/EOppedal/Serializers.git
-  - packageName: Encryption
-    gitUrl: https://github.com/EOppedal/Encryption.git
-  - packageName: EncryptedSerializer
-    gitUrl: https://github.com/EOppedal/EncryptedSerializer.git
+  - packageName: Serialization
+    gitUrl: https://github.com/EOppedal/Serialization.git
   - packageName: Parallax
     gitUrl: https://github.com/EOppedal/Parallax.git
   - packageName: ServiceLocator
