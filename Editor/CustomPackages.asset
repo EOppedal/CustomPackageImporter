@@ -13,31 +13,29 @@ MonoBehaviour:
   m_Name: CustomPackages
   m_EditorClassIdentifier: 
   packages:
-  - packageName: ClampedFloat
-    gitUrl: https://github.com/EOppedal/ClampedFloat.git
-  - packageName: Observable
-    gitUrl: https://github.com/EOppedal/Observable.git
-  - packageName: ScrubGlobalData
-    gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
   - packageName: Extensions And Attributes
     gitUrl: https://github.com/EOppedal/ExtensionsAndAttributes.git
   - packageName: DebugLogger
     gitUrl: https://github.com/EOppedal/DebugLogger.git
-  - packageName: ScrubUtils
-    gitUrl: https://github.com/EOppedal/ScrubUtils.git
-  - packageName: Timers
-    gitUrl: https://github.com/EOppedal/Timers.git
   - packageName: Singletons
     gitUrl: https://github.com/EOppedal/Singletons.git
+  - packageName: Timers
+    gitUrl: https://github.com/EOppedal/Timers.git
+  - packageName: Observable
+    gitUrl: https://github.com/EOppedal/Observable.git
+  - packageName: ServiceLocator
+    gitUrl: https://github.com/EOppedal/ServiceLocator.git
+  - packageName: HealthComponent
+    gitUrl: https://github.com/EOppedal/HealthComponent.git
+  - packageName: ScrubGlobalData
+    gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
+  - packageName: ScrubUtils
+    gitUrl: https://github.com/EOppedal/ScrubUtils.git
   - packageName: Serialization
     gitUrl: https://github.com/EOppedal/Serialization.git
   - packageName: Parallax
     gitUrl: https://github.com/EOppedal/Parallax.git
-  - packageName: ServiceLocator
-    gitUrl: https://github.com/EOppedal/ServiceLocator.git
   - packageName: UIToolkitTools
     gitUrl: https://github.com/EOppedal/UIToolkitTools.git
   - packageName: RuntimeSet
     gitUrl: https://github.com/EOppedal/RuntimeSet.git
-  - packageName: HealthComponent
-    gitUrl: https://github.com/EOppedal/HealthComponent.git
