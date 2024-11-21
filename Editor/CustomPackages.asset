@@ -39,3 +39,5 @@ MonoBehaviour:
     gitUrl: https://github.com/EOppedal/UIToolkitTools.git
   - packageName: RuntimeSet
     gitUrl: https://github.com/EOppedal/RuntimeSet.git
+  - packageName: Scene Collections
+    gitUrl: https://github.com/EOppedal/SceneCollections.git
