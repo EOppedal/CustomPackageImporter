@@ -20,9 +20,9 @@ namespace CustomPackageImporter.Editor {
         private const string PackagePath = "/package.json";
 
         private const string CustomPackagesScrubPath =
-            "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/CustomPackages.asset";
+            "Packages/com.erlend-eiken-oppedal.custom-package-importer/Editor/CustomPackages.asset";
 
-        private const string IconPath = "Packages/com.erlend-eiken-oppedal.custompackageimporter/Editor/Icon.png";
+        private const string IconPath = "Packages/com.erlend-eiken-oppedal.custom-package-importer/Editor/Icon.png";
 
         private JObject _manifestJson;
         private static readonly List<Button> Buttons = new();

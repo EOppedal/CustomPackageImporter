@@ -13,31 +13,15 @@ MonoBehaviour:
   m_Name: CustomPackages
   m_EditorClassIdentifier: 
   packages:
-  - packageName: Extensions And Attributes
-    gitUrl: https://github.com/EOppedal/ExtensionsAndAttributes.git
-  - packageName: DebugLogger
-    gitUrl: https://github.com/EOppedal/DebugLogger.git
-  - packageName: Singletons
-    gitUrl: https://github.com/EOppedal/Singletons.git
+  - packageName: Unity Utils
+    gitUrl: https://github.com/EOppedal/UnityUtils.git
   - packageName: Timers
     gitUrl: https://github.com/EOppedal/Timers.git
-  - packageName: Observable
-    gitUrl: https://github.com/EOppedal/Observable.git
-  - packageName: ServiceLocator
-    gitUrl: https://github.com/EOppedal/ServiceLocator.git
-  - packageName: HealthComponent
-    gitUrl: https://github.com/EOppedal/HealthComponent.git
-  - packageName: ScrubGlobalData
-    gitUrl: https://github.com/EOppedal/ScrubGlobalData.git
-  - packageName: ScrubUtils
-    gitUrl: https://github.com/EOppedal/ScrubUtils.git
-  - packageName: Serialization
-    gitUrl: https://github.com/EOppedal/Serialization.git
+  - packageName: DebugLogger
+    gitUrl: https://github.com/EOppedal/DebugLogger.git
+  - packageName: Scene Collections
+    gitUrl: https://github.com/EOppedal/SceneCollections.git
   - packageName: Parallax
     gitUrl: https://github.com/EOppedal/Parallax.git
   - packageName: UIToolkitTools
     gitUrl: https://github.com/EOppedal/UIToolkitTools.git
-  - packageName: RuntimeSet
-    gitUrl: https://github.com/EOppedal/RuntimeSet.git
-  - packageName: Scene Collections
-    gitUrl: https://github.com/EOppedal/SceneCollections.git
