@@ -1,5 +1,5 @@
 # CustomPackageImporter
-Automatically adds a Unity package **and all of its dependencies** to the `manifest.json`.
+Automatically adds a Unity package **and all of its dependencies** from git to the `manifest.json`.
 
 ## ⚠ Known Issues
 - Unity does **not always immediately refresh** after modifying `manifest.json`.

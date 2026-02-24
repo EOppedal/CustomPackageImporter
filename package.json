@@ -1,11 +1,10 @@
 {
-  "name": "com.erlend-eiken-oppedal.custompackageimporter",
+  "name": "com.erlend-eiken-oppedal.custom-package-importer",
   "version": "1.0.0",
   "displayName": "Custom Package Importer",
   "author": {
     "name": "Erlend Eiken Oppedal",
     "email": "erlend.oppedal@gmail.com"
   },
-  "dependencies": {
-  }
+  "description": "Automatically adds a Unity package, **and all of its dependencies** from git to the `manifest.json`."
 }
